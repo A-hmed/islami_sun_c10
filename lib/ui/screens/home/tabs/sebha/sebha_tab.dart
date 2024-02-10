@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:islami_sun_c10/ui/utils/app_assets.dart';
 import 'package:islami_sun_c10/ui/utils/app_colors.dart';
@@ -13,21 +15,27 @@ class SebhaTab extends StatefulWidget {
 
 class _SebhaTabState extends State<SebhaTab> {
   int counter = 0;
+  String elzecr = "سبحان الله";
+
+  double turns = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Stack(
+        Stack(
           children: [
-            Positioned(
+            const Positioned(
                 top: 0,
                 left: 150,
                 child: Image(image: AssetImage(AppAssets.headOfSebha))),
             Padding(
-              padding: EdgeInsets.all(75.0),
-              child: Image(image: AssetImage(AppAssets.bodyOfSebha)),
+              padding: const EdgeInsets.all(75.0),
+              child: AnimatedRotation(
+                  turns: turns,
+                  duration: const Duration(seconds: 1),
+                  child: const Image(image: AssetImage(AppAssets.bodyOfSebha))),
             ),
           ],
         ),
@@ -64,9 +72,9 @@ class _SebhaTabState extends State<SebhaTab> {
               color: AppColors.orange,
               borderRadius: BorderRadius.circular(30),
             ),
-            child: const Text(
-              "سبحان اللة",
-              style: TextStyle(
+            child: Text(
+              elzecr,
+              style: const TextStyle(
                 fontSize: 25,
                 color: AppColors.white,
               ),
@@ -79,8 +87,15 @@ class _SebhaTabState extends State<SebhaTab> {
 
   void updateCounter() {
     counter++;
-    setState(() {
-
-    });
+    turns += 1/8;
+    if (counter >= 34) {
+      if(elzecr == "سبحان الله"){
+        elzecr = "الحمد لله";
+      }else{
+        elzecr = "سبحان الله";
+      }
+      counter = 0;
+    }
+    setState(() {});
   }
 }
